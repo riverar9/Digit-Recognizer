@@ -10,9 +10,6 @@ mac = True
 if mac:
     train_data, train_labels = load_csv(r"dl_data/train.csv", target_column=0,categorical_labels=True, n_classes=10)
     test_data, test_labels = load_csv(r"dl_data/test.csv")
-else:
-    train_df = load_csv(r"dl_data\train.csv")
-    test_df = load_csv(r"dl_data\test.csv")
 
 #%%
 #Building a 3 layer NN with 784, 16, 10 nodes
@@ -24,6 +21,6 @@ net = tflearn.regression(net)
 
 #%%
 model = tflearn.DNN(net)
-model.fit(train_data,train_labels,show_metric=True, batch_size=16)
+model.fit(train_data,train_labels,show_metric=True, batch_size=16, validation_set=0.1)
 
 #%%
