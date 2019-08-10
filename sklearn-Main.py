@@ -6,8 +6,16 @@ import sys
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn import preprocessing
 
 mac = True
+
+#%%
+def model_preprocessing(df):
+    x = df.values
+    min_max_scaler = preprocessing.MinMaxScaler()
+    x_scaled = min_max_scaler.fit_transform(x)
+    return(pd.DataFrame(x_scaled))
 
 #%%
 if mac:
