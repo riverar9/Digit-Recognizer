@@ -56,8 +56,8 @@ result_df.set_index('ImageId',inplace=True)
 
 #%%
 if mac:
-    result_df.to_csv(r"Submissions/submission.csv")
+    result_df.to_csv(r"Submissions/sklearn-submission.csv")
 else:
-    result_df.to_csv(r"Submissions\submission.csv")
+    result_df.to_csv(r"Submissions\sklearn-submission.csv")
 
 #%%
