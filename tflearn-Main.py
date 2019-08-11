@@ -3,6 +3,7 @@
 import numpy as np
 import tflearn
 from tflearn.data_utils import load_csv
+import pandas as pd
 
 mac = True
 #%%
@@ -23,9 +24,10 @@ if mac:
 train_data = model_preprocessing(train_data)
 test_data = model_preprocessing(test_data)
 #%%
-#Building a 3 layer NN with 64, 16, 10 nodes
+#Building a 3 layer NN with 64, 16, 16, 10 nodes
 net = tflearn.input_data(shape=[None, 784])
 net = tflearn.fully_connected(net,64)
+net = tflearn.fully_connected(net,16)
 net = tflearn.fully_connected(net,16)
 net = tflearn.fully_connected(net,10,activation='softmax')
 net = tflearn.regression(net)
@@ -38,6 +40,12 @@ model.fit(train_data,train_labels,show_metric=True, batch_size=16, validation_se
 #%%
 #Here we'll throw our predictions into our input
 output = model.predict_label(test_data)
+submission = []
+for each in range(len(output)):
+    submission.append([[int(each+1)],[int(output[each].argmax())]])
 
-np.savetxt(r"Submissions/tflearn-submission.csv",output,delimiter=",")
+predictions = pd.DataFrame.from_records(submission)
+predictions.rename({0:'ImageId',1:'Label'},axis='columns',inplace=True)
+predictions.set_index('ImageId', inplace=True)
+predictions.to_csv(r"Submissions/tflearn-submission.csv")
 #%%
