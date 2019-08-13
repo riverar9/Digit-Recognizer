@@ -7,7 +7,7 @@ import pandas as pd
 
 mac = True
 #%%
-#Creating a preprocessing function for the data
+#Creating a preprocessing function for the data preprocessing
 def model_preprocessing(data):
     return [[int(float(j))/255 for j in i] for i in data]
 #%%
@@ -42,7 +42,7 @@ model.fit(train_data,train_labels,show_metric=True, batch_size=16, validation_se
 output = model.predict_label(test_data)
 submission = []
 for each in range(len(output)):
-    submission.append([[int(each+1)],[int(output[each].argmax())]])
+    submission.append([int(each+1),int(output[each].argmax())])
 
 predictions = pd.DataFrame.from_records(submission)
 predictions.rename({0:'ImageId',1:'Label'},axis='columns',inplace=True)
